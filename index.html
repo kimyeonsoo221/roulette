@@ -4,41 +4,93 @@
 <meta charset="UTF-8">
 <title>그린비아 룰렛 이벤트</title>
 <style>
-body { text-align: center; font-family: sans-serif; }
-#wheel {
-  margin: 30px auto;
-  width: 300px;
-  height: 300px;
-  border-radius: 50%;
-  border: 10px solid #ccc;
+body {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background: #fff;
+}
+
+h1 {
+  margin-top: 25px;
+}
+
+#wrapper {
   position: relative;
-  overflow: hidden;
+  width: 320px;
+  margin: 30px auto;
 }
-.segment {
+
+#pointer {
   position: absolute;
-  width: 50%;
-  height: 50%;
-  transform-origin: 100% 100%;
-  text-align: right;
-  padding: 5px;
-  font-size: 12px;
+  top: -5px;
+  left: 145px;
+  z-index: 10;
+  font-size: 35px;
+  transform: rotate(180deg);
 }
+
+#wheel {
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  border: 8px solid #333;
+  background: conic-gradient(
+    #f9d85e 0deg 60deg,
+    #ffffff 60deg 120deg,
+    #8fd17f 120deg 180deg,
+    #ffffff 180deg 240deg,
+    #f9d85e 240deg 300deg,
+    #8fd17f 300deg 360deg
+  );
+  transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+  position: relative;
+}
+
+.prize {
+  position: absolute;
+  width: 100px;
+  left: 110px;
+  top: 145px;
+  font-weight: bold;
+  font-size: 14px;
+  transform-origin: 50px 15px;
+}
+
 button {
-  padding: 15px 30px;
-  font-size: 18px;
+  margin-top: 20px;
+  padding: 15px 35px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#result {
+  margin-top: 25px;
+  font-size: 24px;
+  font-weight: bold;
 }
 </style>
 </head>
 <body>
 
-<h2>🎁 그린비아 룰렛 이벤트 🎁</h2>
-<p>버튼을 눌러 룰렛을 돌리세요!</p>
+<h1>🎁 그린비아 룰렛 이벤트 🎁</h1>
+<p>룰렛을 돌려 사은품을 확인하세요!</p>
 
-<div id="wheel"></div>
+<div id="wrapper">
+  <div id="pointer">▼</div>
+  <div id="wheel">
+    <div class="prize" style="transform: rotate(30deg) translateY(-120px);">프로틴밀 1팩</div>
+    <div class="prize" style="transform: rotate(90deg) translateY(-120px);">샘플팩</div>
+    <div class="prize" style="transform: rotate(150deg) translateY(-120px);">에너지젤</div>
+    <div class="prize" style="transform: rotate(210deg) translateY(-120px);">할인쿠폰</div>
+    <div class="prize" style="transform: rotate(270deg) translateY(-120px);">샘플팩</div>
+    <div class="prize" style="transform: rotate(330deg) translateY(-120px);">꽝 없음</div>
+  </div>
+</div>
 
 <button onclick="spin()">룰렛 돌리기</button>
 
-<h3 id="result"></h3>
+<div id="result"></div>
 
 <script>
 const prizes = [
@@ -50,19 +102,31 @@ const prizes = [
   "꽝 없음"
 ];
 
-const wheel = document.getElementById("wheel");
-
-prizes.forEach((p, i) => {
-  const seg = document.createElement("div");
-  seg.className = "segment";
-  seg.style.transform = `rotate(${i * 60}deg) skewY(-30deg)`;
-  seg.innerHTML = `<span>${p}</span>`;
-  wheel.appendChild(seg);
-});
+let spinning = false;
+let currentRotation = 0;
 
 function spin() {
-  const result = prizes[Math.floor(Math.random() * prizes.length)];
-  document.getElementById("result").innerText = "👉 결과: " + result;
+  if (spinning) return;
+
+  spinning = true;
+  document.getElementById("result").innerText = "";
+
+  const index = Math.floor(Math.random() * prizes.length);
+  const segmentAngle = 360 / prizes.length;
+
+  const stopAngle = 360 - (index * segmentAngle + segmentAngle / 2);
+  const extraSpin = 360 * 5;
+
+  currentRotation += extraSpin + stopAngle;
+
+  document.getElementById("wheel").style.transform =
+    `rotate(${currentRotation}deg)`;
+
+  setTimeout(() => {
+    document.getElementById("result").innerText =
+      "👉 결과: " + prizes[index];
+    spinning = false;
+  }, 4200);
 }
 </script>
 
