@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>그린비아 룰렛 이벤트</title>
+<style>
+body { text-align: center; font-family: sans-serif; }
+#wheel {
+  margin: 30px auto;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 10px solid #ccc;
+  position: relative;
+  overflow: hidden;
+}
+.segment {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  transform-origin: 100% 100%;
+  text-align: right;
+  padding: 5px;
+  font-size: 12px;
+}
+button {
+  padding: 15px 30px;
+  font-size: 18px;
+}
+</style>
+</head>
+<body>
+
+<h2>🎁 그린비아 룰렛 이벤트 🎁</h2>
+<p>버튼을 눌러 룰렛을 돌리세요!</p>
+
+<div id="wheel"></div>
+
+<button onclick="spin()">룰렛 돌리기</button>
+
+<h3 id="result"></h3>
+
+<script>
+const prizes = [
+  "프로틴밀 1팩",
+  "샘플팩",
+  "에너지젤",
+  "할인쿠폰",
+  "샘플팩",
+  "꽝 없음"
+];
+
+const wheel = document.getElementById("wheel");
+
+prizes.forEach((p, i) => {
+  const seg = document.createElement("div");
+  seg.className = "segment";
+  seg.style.transform = `rotate(${i * 60}deg) skewY(-30deg)`;
+  seg.innerHTML = `<span>${p}</span>`;
+  wheel.appendChild(seg);
+});
+
+function spin() {
+  const result = prizes[Math.floor(Math.random() * prizes.length)];
+  document.getElementById("result").innerText = "👉 결과: " + result;
+}
+</script>
+
+</body>
+</html>
