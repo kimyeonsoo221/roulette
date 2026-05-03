@@ -7,11 +7,6 @@
 body {
   text-align: center;
   font-family: Arial, sans-serif;
-  background: #fff;
-}
-
-h1 {
-  margin-top: 25px;
 }
 
 #wrapper {
@@ -24,7 +19,6 @@ h1 {
   position: absolute;
   top: -5px;
   left: 145px;
-  z-index: 10;
   font-size: 35px;
   transform: rotate(180deg);
 }
@@ -34,14 +28,17 @@ h1 {
   height: 320px;
   border-radius: 50%;
   border: 8px solid #333;
+
+  /* 🎯 좌우 대칭 색상 */
   background: conic-gradient(
-    #f9d85e 0deg 60deg,
-    #ffffff 60deg 120deg,
-    #8fd17f 120deg 180deg,
+    #ffffff 0deg 60deg,
+    #8fd17f 60deg 120deg,
+    #f9d85e 120deg 180deg,
     #ffffff 180deg 240deg,
-    #f9d85e 240deg 300deg,
-    #8fd17f 300deg 360deg
+    #8fd17f 240deg 300deg,
+    #f9d85e 300deg 360deg
   );
+
   transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
   position: relative;
 }
@@ -60,8 +57,6 @@ button {
   margin-top: 20px;
   padding: 15px 35px;
   font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
 }
 
 #result {
@@ -79,12 +74,25 @@ button {
 <div id="wrapper">
   <div id="pointer">▼</div>
   <div id="wheel">
-    <div class="prize" style="transform: rotate(30deg) translateY(-120px);">프로틴밀 1팩</div>
-    <div class="prize" style="transform: rotate(90deg) translateY(-120px);">샘플팩</div>
-    <div class="prize" style="transform: rotate(150deg) translateY(-120px);">에너지젤</div>
-    <div class="prize" style="transform: rotate(210deg) translateY(-120px);">할인쿠폰</div>
-    <div class="prize" style="transform: rotate(270deg) translateY(-120px);">샘플팩</div>
-    <div class="prize" style="transform: rotate(330deg) translateY(-120px);">꽝 없음</div>
+
+    <!-- 흰색 (샘플팩) -->
+    <div class="prize" style="transform: rotate(30deg) translateY(-120px);">샘플팩</div>
+
+    <!-- 연두 (에너지젤) -->
+    <div class="prize" style="transform: rotate(90deg) translateY(-120px);">에너지젤 1팩</div>
+
+    <!-- 노랑 (프로틴밀) -->
+    <div class="prize" style="transform: rotate(150deg) translateY(-120px);">프로틴밀 1팩</div>
+
+    <!-- 흰색 -->
+    <div class="prize" style="transform: rotate(210deg) translateY(-120px);">샘플팩</div>
+
+    <!-- 연두 -->
+    <div class="prize" style="transform: rotate(270deg) translateY(-120px);">에너지젤 1팩</div>
+
+    <!-- 노랑 -->
+    <div class="prize" style="transform: rotate(330deg) translateY(-120px);">프로틴밀 1팩</div>
+
   </div>
 </div>
 
@@ -94,12 +102,12 @@ button {
 
 <script>
 const prizes = [
+  "샘플팩",
+  "에너지젤 1팩",
   "프로틴밀 1팩",
   "샘플팩",
-  "에너지젤",
-  "할인쿠폰",
-  "샘플팩",
-  "꽝 없음"
+  "에너지젤 1팩",
+  "프로틴밀 1팩"
 ];
 
 let spinning = false;
